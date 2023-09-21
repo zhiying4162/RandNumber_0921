@@ -14,22 +14,21 @@
     // }
 
     session_start();
-
-    // if(!isset($_SESSION['numR'])){
-    //     $_SESSION['numR'] = array();
-    // }
-
-    // if(!isset($_SESSION['numC'])){
-    //     $_SESSION['numC'] = 0;
-    // }
-    // else{
-    //     $_SESSION['numC']++;
-    // }
 		
     $Number=array();
     $count=0;
 
     $num=$_SESSION['num'];
+    
+    if (isset($_POST['submit'])) {
+        $_SESSION['clickCount']++;
+    }
+
+    $clickCount=$_SESSION['clickCount'];
+
+    if($clickCount>9){
+        session_destroy();
+    }
 
     // $numStr=implode("",$Number);
 
@@ -55,12 +54,10 @@
             }
         }
         $count++;
-        // $numStr="";
-        for($i=0;$i<$count;$i++){
-           $numStr.=$i ."=".$Number[$i].','.$Number[$i+1].','.$Number[$i+2]."<br>";
-        //    $numS1=$numStr;
-           echo $numStr;
-        }
+        $numStr=$clickCount ."=".$Number[0].','.$Number[1].','.$Number[2]."<br>";
+
+        echo $numStr;
+
         $abs_AB=abs($Number[1]-$Number[0]);
         $abs_BC=abs($Number[2]-$Number[1]);
         if($abs_AB==$abs_BC||$count>=9){
@@ -72,20 +69,5 @@
         $_SESSION['num']=$num;  //判斷執行第幾次
         $_SESSION['count']=$count;
         header('location:index.php');
-    }
-
-    
-
-    // foreach ($Number as $num) {
-    //     if (function_exists($num)) {
-    //         print_r($Number);
-    //     } 
-    //     else {
-    //         echo($conut ."=".$numStr) ;
-    //     }
-    // }
-
-    // $_SESSION['numR'] =$_SESSION['numC'] ."=".$Number;
-
-    // print_r($Number);
+    }  
 ?>
