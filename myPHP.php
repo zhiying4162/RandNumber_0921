@@ -43,18 +43,34 @@
 
         //連接最後的答案
         if(!isset($_SESSION['ans'])){
-            $_SESSION['ans']="";
+            $_SESSION['ans']=array();
         }
+
+        if(!isset($_SESSION['ansA'])){
+            $_SESSION['ansA']=array();
+        }
+
+        $numsString= implode(',', $Narr);
+        $nums_S= implode('', $Narr);
         
-        $_SESSION['ans'].=$_SESSION['bout']."=";
-        for($i=0;$i<count($_SESSION['Narr']);$i++){
-            $_SESSION['ans'].=$_SESSION['Narr'][$i].',';
-        }
-        $_SESSION['ans'].="</br>";
+        $_SESSION['ans'][] = $_SESSION['bout']."=".$numsString."<br>";  
+        $_SESSION['ansA'][] = $_SESSION['bout']."=".$nums_S."<br>";  
+
+        //按第二次後的顯示
+        
+        // $_SESSION['ans'].=$_SESSION['bout']."=";
+        // for($i=0;$i<count($_SESSION['Narr']);$i++){
+        //     $_SESSION['ans'].=$_SESSION['Narr'][$i].',';
+        // }
+        // $_SESSION['ans'].="</br>";
 
         if(isset($_SESSION['check'])){
             if($_SESSION['check']==1){
-                print_r($_SESSION['ans']);
+                // print_r($_SESSION['ans']);
+                foreach($_SESSION['ans'] as $value){
+                    echo $value;
+                }
+        
             }
             else{
                 print_r($_SESSION['Narr']);
@@ -68,12 +84,12 @@
         if($_SESSION['bout']<9){
             if($abs_AB==$abs_BC){
                 echo '總共試了'.$_SESSION['bout'].'次或已找到數字了喔!';
-                session_destroy(); //將session摧毀，不再執行
+                include 'insert.php';
             }
         }
         else{
             echo '總共試了'.$_SESSION['bout'].'次或已找到數字了喔!';
-            session_destroy();
+            include 'insert.php';
         }
 
             // include 'insert.php';
